@@ -5,6 +5,7 @@ import { ROLES } from '../../../constants/roles';
 import Button from '../../common/Button/Button';
 import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
 import { PATHS } from '../../../routes/paths';
+import { withLoading } from '../../../utils/withLoading';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -17,7 +18,10 @@ const Header = () => {
   };
 
   const handleConfirmLogout = async () => {
-    await logout();
+    await withLoading(async () => {
+      await logout();
+    });
+    
     setShowConfirmModal(false);
   };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { useLoading } from '../../hooks/useLoading';
 import { PATHS } from '../../routes/paths';
 import Button from '../../components/common/Button/Button';
 import './Login.css';
@@ -9,13 +10,19 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { login, loading, error } = useAuth();
+  const { login, error } = useAuth();
+  const { showLoading, hideLoading } = useLoading();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await login(email, password);
-    if (success) {
-      navigate(PATHS.HOME);
+    showLoading();
+    try {
+      const success = await login(email, password);
+      if (success) {
+        navigate(PATHS.HOME);
+      }
+    } finally {
+      hideLoading();
     }
   };
 
@@ -46,10 +53,9 @@ const Login = () => {
           <Button 
             type="submit" 
             variant="primary" 
-            fullWidth 
-            disabled={loading}
+            fullWidth
           >
-            {loading ? 'Loading...' : 'Login'}
+            Login
           </Button>
         </form>
       </div>

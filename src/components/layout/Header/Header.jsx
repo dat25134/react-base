@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Header.css';
 import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
+import Button from '../../common/Button/Button';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -40,17 +41,21 @@ const Header = () => {
           {user ? (
             <>
               <span className="user-email">{user.email}</span>
-              <button className="logout-btn" onClick={handleLogoutClick}>
+              <Button 
+                variant="danger"
+                size="small"
+                onClick={handleLogoutClick}
+              >
                 Logout
-              </button>
+              </Button>
             </>
           ) : (
             <>
               <Link to="/login">
-                <button className="login-btn">Login</button>
+                <Button variant="primary" size="small">Login</Button>
               </Link>
               <Link to="/signup">
-                <button className="signup-btn">Sign Up</button>
+                <Button variant="outline" size="small">Sign Up</Button>
               </Link>
             </>
           )}

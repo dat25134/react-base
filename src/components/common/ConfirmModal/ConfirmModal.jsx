@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../Button/Button';
 import './ConfirmModal.css';
 
 const ConfirmModal = ({ 
@@ -18,8 +19,12 @@ const ConfirmModal = ({
         <h2>{title}</h2>
         <p>{message}</p>
         <div className="modal-buttons">
-          <button onClick={onConfirm}>{confirmText}</button>
-          <button onClick={onClose}>{cancelText}</button>
+          <Button variant="danger" onClick={onConfirm}>
+            {confirmText}
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            {cancelText}
+          </Button>
         </div>
       </div>
     </div>

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Header.css';
+import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
 
 const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const handleLogout = async () => {
+  const handleLogoutClick = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmLogout = async () => {
     await logout();
+    setShowConfirmModal(false);
     navigate('/login');
   };
 
@@ -33,7 +40,7 @@ const Header = () => {
           {user ? (
             <>
               <span className="user-email">{user.email}</span>
-              <button className="logout-btn" onClick={handleLogout}>
+              <button className="logout-btn" onClick={handleLogoutClick}>
                 Logout
               </button>
             </>
@@ -49,6 +56,14 @@ const Header = () => {
           )}
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleConfirmLogout}
+        title="Xác nhận đăng xuất"
+        message="Bạn có chắc chắn muốn đăng xuất?"
+      />
     </header>
   );
 };

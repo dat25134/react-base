@@ -1,8 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
 import './Header.css';
 
 const Header = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -21,8 +30,23 @@ const Header = () => {
         </nav>
 
         <div className="header-right">
-          <button className="login-btn">Login</button>
-          <button className="signup-btn">Sign Up</button>
+          {user ? (
+            <>
+              <span className="user-email">{user.email}</span>
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <button className="login-btn">Login</button>
+              </Link>
+              <Link to="/signup">
+                <button className="signup-btn">Sign Up</button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

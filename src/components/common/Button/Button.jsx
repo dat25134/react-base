@@ -3,8 +3,8 @@ import './Button.css';
 
 const Button = ({
   children,
-  variant = 'primary', // primary, secondary, danger, success, outline
-  size = 'medium',     // small, medium, large
+  variant = 'primary',
+  size = 'medium',
   fullWidth = false,
   disabled = false,
   type = 'button',

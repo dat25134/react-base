@@ -1,30 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { authService } from '../../services/api/auth';
+import { useAuth } from '../../hooks/useAuth';
+import { PATHS } from '../../routes/paths';
+import Button from '../../components/common/Button/Button';
 import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loading, error } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setError('');
-      setLoading(true);
-      const userData = await authService.login(email, password);
-      login(userData);
-      navigate('/');
-    } catch (err) {
-      setError('Failed to login. Please check your credentials.');
-    } finally {
-      setLoading(false);
+    const success = await login(email, password);
+    if (success) {
+      navigate(PATHS.HOME);
     }
   };
 
@@ -52,9 +43,14 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" disabled={loading}>
+          <Button 
+            type="submit" 
+            variant="primary" 
+            fullWidth 
+            disabled={loading}
+          >
             {loading ? 'Loading...' : 'Login'}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

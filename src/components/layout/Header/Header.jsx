@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, NavLink } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
-import './Header.css';
-import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
-import Button from '../../common/Button/Button';
+import { useAuth, useHasRole } from '../../../hooks/useAuth';
+import { ROLES } from '../../../constants/roles';
 import { PATHS } from '../../../routes/paths';
-import { ROLES } from '../../../contexts/AuthContext';
+import Button from '../../../components/common/Button/Button';
+import ConfirmModal from '../../../components/common/ConfirmModal/ConfirmModal';
+import './Header.css';
 
 const Header = () => {
-  const { user, logout, hasRole } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const isUser = useHasRole(ROLES.USER);
+  const isAdmin = useHasRole(ROLES.ADMIN);
 
   const handleLogoutClick = () => {
     setShowConfirmModal(true);
   };
 
   const handleConfirmLogout = async () => {
-    await logout();
-    setShowConfirmModal(false);
-    navigate(PATHS.HOME);
+    const success = await logout();
+    if (success) {
+      setShowConfirmModal(false);
+      navigate(PATHS.LOGIN);
+    }
   };
 
   const getNavLinks = () => {
@@ -28,11 +33,11 @@ const Header = () => {
       { to: PATHS.CONTACT, label: 'Contact' },
     ];
 
-    if (hasRole(ROLES.USER)) {
+    if (isUser) {
       links.push({ to: PATHS.ABOUT, label: 'About' });
     }
 
-    if (hasRole(ROLES.ADMIN)) {
+    if (isAdmin) {
       links.push({ to: PATHS.ADMIN.DASHBOARD, label: 'Admin Dashboard' });
     }
 

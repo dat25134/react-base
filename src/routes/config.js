@@ -5,7 +5,7 @@ import Contact from '../pages/Contact/Contact';
 import Profile from '../pages/Profile/Profile';
 import AdminDashboard from '../pages/AdminDashboard/AdminDashboard';
 import { PATHS } from './paths';
-import { ROLES } from '../contexts/AuthContext';
+import { ROLES } from '../constants/roles';
 
 export const publicRoutes = [
   {

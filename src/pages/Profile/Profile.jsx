@@ -1,10 +1,11 @@
 import React from 'react';
 import Layout from '../../components/layout/Layout';
-import { useAuth } from '../../contexts/AuthContext';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../store/slices/authSlice';
 import './Profile.css';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const user = useSelector(selectUser);
 
   return (
     <Layout>

@@ -2,7 +2,7 @@
 export const authService = {
   
     login: async (email, password) => {
-    // Simulate API delay
+    // Mock API call
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Mock users with different roles
@@ -23,10 +23,7 @@ export const authService = {
     
     const user = users[email];
     if (user && password === 'password') {
-      return {
-        ...user,
-        token: 'mock-jwt-token'
-      };
+      return user;
     }
     
     throw new Error('Invalid credentials');
@@ -44,7 +41,6 @@ export const authService = {
 //   },
 
   logout: async () => {
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 500));
     return true;
   }

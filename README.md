@@ -1,70 +1,156 @@
-# Getting Started with Create React App
+# React Base Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application template built with Create React App, featuring authentication, role-based authorization, and a clean architecture.
+
+## Features
+
+- 🔐 Authentication system with role-based access control
+- 🎨 Tailwind CSS for styling
+- 🔄 Redux Toolkit for state management
+- 📱 Responsive design
+- 🛣️ React Router for navigation
+- 🔄 Loading states management
+- 🌐 API integration ready
+
+## Tech Stack
+
+- React 18
+- Redux Toolkit
+- React Router DOM
+- Tailwind CSS
+- Axios
+- Redux Persist
+
+## Project Structure
+src/
+├── assets/ # Static assets and global styles
+├── components/ # Reusable components
+│ ├── common/ # Shared UI components
+│ └── layout/ # Layout components
+├── config/ # Configuration files
+├── constants/ # Constants and enums
+├── hooks/ # Custom React hooks
+├── pages/ # Page components
+├── routes/ # Routing configuration
+├── services/ # API services
+├── store/ # Redux store setup
+└── utils/ # Utility functions
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+```
+2. Install dependencies
+```bash
+npm install
+```
+3. Create environment file
+```bash
+cp .env.example .env
+```
+4. Start the development server
+```bash
+npm start
+```
 
 ## Available Scripts
 
-In the project directory, you can run:
+- `npm start` - Runs the app in development mode
+- `npm test` - Launches the test runner
+- `npm run build` - Builds the app for production
+- `npm run eject` - Ejects from Create React App
 
-### `npm start`
+## Authentication
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The project includes a complete authentication system with:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Login/Logout functionality
+- Role-based route protection
+- Persistent authentication state
+- Loading states during authentication
 
-### `npm test`
+### Test Credentials
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Admin User:
+    Email: admin@example.com
+    Password: password
+    Regular User:
+    Email: user@example.com
+    Password: password
 
-### `npm run build`
+## Components
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Common Components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Button
+- Supports multiple variants (primary, secondary, danger, success)
+- Configurable sizes
+- Loading state support
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Loading
+- Fullscreen overlay option
+- Multiple size variants
+- Custom colors
 
-### `npm run eject`
+3. ConfirmModal
+- Reusable confirmation dialog
+- Customizable messages and actions
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Layout Components
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Layout
+- Consistent page structure
+- Responsive header and footer
+- Content container with max-width
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. Header
+- Responsive navigation
+- Dynamic menu based on user roles
+- Authentication status display
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## State Management
 
-## Learn More
+Redux Toolkit is used for state management with the following slices:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Auth Slice
+- User authentication state
+- Role management
+- Login/logout actions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Loading Slice
+- Global loading state
+- Support for multiple loading states
 
-### Code Splitting
+## Styling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The project uses a combination of:
 
-### Analyzing the Bundle Size
+- Tailwind CSS for utility-first styling
+- CSS modules for component-specific styles
+- Global styles for common elements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Environment Variables
 
-### Making a Progressive Web App
+REACT_APP_API_URL=http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License - see the LICENSE file for details.

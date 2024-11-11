@@ -5,17 +5,30 @@ export const authService = {
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Mock successful login
-    if (email === 'test@example.com' && password === 'password') {
+    // Mock users with different roles
+    const users = {
+      'admin@example.com': {
+        id: '1',
+        email: 'admin@example.com',
+        name: 'Admin User',
+        roles: ['ADMIN', 'USER'],
+      },
+      'user@example.com': {
+        id: '2',
+        email: 'user@example.com',
+        name: 'Normal User',
+        roles: ['USER'],
+      },
+    };
+    
+    const user = users[email];
+    if (user && password === 'password') {
       return {
-        id: '123',
-        email: email,
-        name: 'Test User',
+        ...user,
         token: 'mock-jwt-token'
       };
     }
     
-    // Mock failed login
     throw new Error('Invalid credentials');
   },
 //   login: async (email, password) => {

@@ -5,9 +5,10 @@ import './Header.css';
 import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
 import Button from '../../common/Button/Button';
 import { PATHS } from '../../../routes/paths';
+import { ROLES } from '../../../contexts/AuthContext';
 
 const Header = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, hasRole } = useAuth();
   const navigate = useNavigate();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -21,6 +22,23 @@ const Header = () => {
     navigate(PATHS.HOME);
   };
 
+  const getNavLinks = () => {
+    const links = [
+      { to: PATHS.HOME, label: 'Home' },
+      { to: PATHS.CONTACT, label: 'Contact' },
+    ];
+
+    if (hasRole(ROLES.USER)) {
+      links.push({ to: PATHS.ABOUT, label: 'About' });
+    }
+
+    if (hasRole(ROLES.ADMIN)) {
+      links.push({ to: PATHS.ADMIN.DASHBOARD, label: 'Admin Dashboard' });
+    }
+
+    return links;
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -32,31 +50,17 @@ const Header = () => {
         
         <nav className="nav-menu">
           <ul>
-            <li>
-              <NavLink 
-                to={PATHS.HOME}
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-                end
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to={PATHS.ABOUT}
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-              >
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to={PATHS.CONTACT}
-                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-              >
-                Contact
-              </NavLink>
-            </li>
+            {getNavLinks().map(({ to, label }) => (
+              <li key={to}>
+                <NavLink 
+                  to={to}
+                  className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                  end={to === PATHS.HOME}
+                >
+                  {label}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </nav>
 

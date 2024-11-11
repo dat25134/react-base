@@ -2,7 +2,10 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Login from '../pages/Login';
 import Contact from '../pages/Contact/Contact';
+import Profile from '../pages/Profile/Profile';
+import AdminDashboard from '../pages/AdminDashboard/AdminDashboard';
 import { PATHS } from './paths';
+import { ROLES } from '../contexts/AuthContext';
 
 export const publicRoutes = [
   {
@@ -24,6 +27,16 @@ export const privateRoutes = [
   {
     path: PATHS.ABOUT,
     component: About,
+    roles: [ROLES.USER],
   },
-  // Thêm các protected routes khác ở đây
+  {
+    path: PATHS.PROFILE.ROOT,
+    component: Profile,
+    roles: [ROLES.USER, ROLES.ADMIN],
+  },
+  {
+    path: PATHS.ADMIN.DASHBOARD,
+    component: AdminDashboard,
+    roles: [ROLES.ADMIN],
+  },
 ]; 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import RoleRoute from './RoleRoute';
 import { publicRoutes, privateRoutes } from './config';
 import { PATHS } from './paths';
 
@@ -18,20 +18,19 @@ const AppRoutes = () => {
           />
         ))}
 
-        {/* Private Routes */}
-        {privateRoutes.map(({ path, component: Component }) => (
+        {/* Private Routes with Roles */}
+        {privateRoutes.map(({ path, component: Component, roles }) => (
           <Route
             key={path}
             path={path}
             element={
-              <PrivateRoute>
+              <RoleRoute roles={roles}>
                 <Component />
-              </PrivateRoute>
+              </RoleRoute>
             }
           />
         ))}
 
-        {/* Catch all route - 404 */}
         <Route path="*" element={<Navigate to={PATHS.HOME} replace />} />
       </Routes>
     </BrowserRouter>

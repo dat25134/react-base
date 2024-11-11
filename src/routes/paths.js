@@ -3,7 +3,6 @@ export const PATHS = {
   LOGIN: '/login',
   ABOUT: '/about',
   CONTACT: '/contact',
-  // Có thể nhóm các routes theo module
   AUTH: {
     LOGIN: '/login',
     SIGNUP: '/signup',
@@ -13,5 +12,10 @@ export const PATHS = {
     ROOT: '/profile',
     SETTINGS: '/profile/settings',
     CHANGE_PASSWORD: '/profile/change-password',
+  },
+  ADMIN: {
+    DASHBOARD: '/admin/dashboard',
+    USERS: '/admin/users',
+    SETTINGS: '/admin/settings',
   },
 }; 

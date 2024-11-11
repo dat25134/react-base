@@ -2,12 +2,17 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+export const ROLES = {
+  ADMIN: 'ADMIN',
+  USER: 'USER',
+  MANAGER: 'MANAGER'
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Kiểm tra localStorage khi component mount
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
@@ -25,11 +30,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const hasRole = (requiredRoles) => {
+    if (!user || !user.roles) return false;
+    if (Array.isArray(requiredRoles)) {
+      return requiredRoles.some(role => user.roles.includes(role));
+    }
+    return user.roles.includes(requiredRoles);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, hasRole }}>
       {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext); 
+export const useAuth = () => useContext(AuthContext);

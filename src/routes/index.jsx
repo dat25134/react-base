@@ -1,36 +1,38 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import Home from '../pages/Home';
-import About from '../pages/About';
-import Login from '../pages/Login';
-
-const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
-  return user ? children : <Navigate to="/login" />;
-};
+import PrivateRoute from './PrivateRoute';
+import { publicRoutes, privateRoutes } from './config';
+import { PATHS } from './paths';
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <PrivateRoute>
-              <About />
-            </PrivateRoute>
-          }
-        />
+        {/* Public Routes */}
+        {publicRoutes.map(({ path, component: Component, exact }) => (
+          <Route
+            key={path}
+            path={path}
+            element={<Component />}
+            exact={exact}
+          />
+        ))}
+
+        {/* Private Routes */}
+        {privateRoutes.map(({ path, component: Component }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <PrivateRoute>
+                <Component />
+              </PrivateRoute>
+            }
+          />
+        ))}
+
+        {/* Catch all route - 404 */}
+        <Route path="*" element={<Navigate to={PATHS.HOME} replace />} />
       </Routes>
     </BrowserRouter>
   );

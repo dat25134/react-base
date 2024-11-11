@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import './Header.css';
 import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
 import Button from '../../common/Button/Button';
+import { PATHS } from '../../../routes/paths';
 
 const Header = () => {
   const { user, logout } = useAuth();
@@ -17,23 +18,45 @@ const Header = () => {
   const handleConfirmLogout = async () => {
     await logout();
     setShowConfirmModal(false);
-    navigate('/login');
+    navigate(PATHS.HOME);
   };
 
   return (
     <header className="header">
       <div className="header-container">
         <div className="logo">
-          <Link to="/">
+          <Link to={PATHS.HOME}>
             <h1>Logo</h1>
           </Link>
         </div>
         
         <nav className="nav-menu">
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <NavLink 
+                to={PATHS.HOME}
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                end
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
+                to={PATHS.ABOUT}
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+              >
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink 
+                to={PATHS.CONTACT}
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+              >
+                Contact
+              </NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -51,11 +74,11 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <Link to={PATHS.LOGIN}>
                 <Button variant="primary" size="small">Login</Button>
               </Link>
-              <Link to="/signup">
-                <Button variant="outline" size="small">Sign Up</Button>
+              <Link to={PATHS.AUTH.SIGNUP}>
+                <Button variant="secondary" size="small">Sign Up</Button>
               </Link>
             </>
           )}

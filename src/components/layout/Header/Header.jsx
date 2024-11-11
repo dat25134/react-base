@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth, useHasRole } from '../../../hooks/useAuth';
 import { ROLES } from '../../../constants/roles';
+import Button from '../../common/Button/Button';
+import ConfirmModal from '../../common/ConfirmModal/ConfirmModal';
 import { PATHS } from '../../../routes/paths';
-import Button from '../../../components/common/Button/Button';
-import ConfirmModal from '../../../components/common/ConfirmModal/ConfirmModal';
-import './Header.css';
 
 const Header = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const isAdmin = useHasRole(ROLES.ADMIN);
+  const isUser = useHasRole(ROLES.USER);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const isUser = useHasRole(ROLES.USER);
-  const isAdmin = useHasRole(ROLES.ADMIN);
-
-  const handleLogoutClick = () => {
+  const handleLogout = () => {
     setShowConfirmModal(true);
   };
 
   const handleConfirmLogout = async () => {
-    const success = await logout();
-    if (success) {
-      setShowConfirmModal(false);
-      navigate(PATHS.LOGIN);
-    }
+    await logout();
+    setShowConfirmModal(false);
   };
 
   const getNavLinks = () => {
@@ -45,52 +39,52 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <Link to={PATHS.HOME}>
-            <h1>Logo</h1>
-          </Link>
-        </div>
-        
-        <nav className="nav-menu">
-          <ul>
-            {getNavLinks().map(({ to, label }) => (
-              <li key={to}>
-                <NavLink 
-                  to={to}
-                  className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-                  end={to === PATHS.HOME}
-                >
-                  {label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
+    <header className="bg-white shadow-md fixed w-full top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
+            <Link to="/" className="text-xl font-bold text-primary-600">
+              Logo
+            </Link>
+          </div>
 
-        <div className="header-right">
-          {user ? (
-            <>
-              <span className="user-email">{user.email}</span>
-              <Button 
-                variant="danger"
-                size="small"
-                onClick={handleLogoutClick}
+          <nav className="hidden md:flex space-x-4">
+            {getNavLinks().map((link) => (
+              <NavLink 
+                  to={link.to}
+                  className={({ isActive }) => isActive ? 'text-primary-600 font-medium' : 'text-gray-600 hover:text-primary-600 transition-colors'}
+                  end={link.to === PATHS.HOME}
               >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Link to={PATHS.LOGIN}>
-                <Button variant="primary" size="small">Login</Button>
+                  {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="text-gray-600 hover:text-primary-600"
+                >
+                  {user.email}
+                </Link>
+                <Button
+                  variant="secondary"
+                  size="small"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button variant="primary" size="small">
+                  Login
+                </Button>
               </Link>
-              <Link to={PATHS.AUTH.SIGNUP}>
-                <Button variant="secondary" size="small">Sign Up</Button>
-              </Link>
-            </>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -98,8 +92,8 @@ const Header = () => {
         isOpen={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}
         onConfirm={handleConfirmLogout}
-        title="Xác nhận đăng xuất"
-        message="Bạn có chắc chắn muốn đăng xuất?"
+        title="Confirm Logout"
+        message="Are you sure you want to logout?"
       />
     </header>
   );

@@ -23,18 +23,18 @@ A modern React application template built with Create React App, featuring authe
 
 ## Project Structure
 src/
-├── assets/ # Static assets and global styles
-├── components/ # Reusable components
-│ ├── common/ # Shared UI components
-│ └── layout/ # Layout components
-├── config/ # Configuration files
-├── constants/ # Constants and enums
-├── hooks/ # Custom React hooks
-├── pages/ # Page components
-├── routes/ # Routing configuration
-├── services/ # API services
-├── store/ # Redux store setup
-└── utils/ # Utility functions
+├── assets/ # Static assets and global styles <br>
+├── components/ # Reusable components<br>
+│ ├── common/ # Shared UI components<br>
+│ └── layout/ # Layout components<br>
+├── config/ # Configuration files<br>
+├── constants/ # Constants and enums<br>
+├── hooks/ # Custom React hooks<br>
+├── pages/ # Page components<br>
+├── routes/ # Routing configuration<br>
+├── services/ # API services<br>
+├── store/ # Redux store setup<br>
+└── utils/ # Utility functions<br>
 
 ## Getting Started
 
